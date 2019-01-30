@@ -1,0 +1,2 @@
+# sqld
+sqldeveloper practice (Oracle)
