@@ -1,0 +1,39 @@
+
+--DML
+
+--일부 칼럼만 입력
+
+INSERT INTO PLAYER (PLAYER_ID, PLAYER_NAME, TEAM_ID, POSITIONS, HEIGHT, WEIGHT, BACK_NO)
+VALUES('2002007', '박지성', 'K07', 'MF', 178, 73, 7);
+
+--넣으려니까 참조 테이블에 해당 데이터가 없다.
+--TEAM에 데이터 넣고 위에 다시 INSERT
+DESC TEAM;
+INSERT INTO TEAM (TEAM_ID, REGION_NAME, TEAM_NAME, STADIUM_ID)
+VALUES('K07', '서울','서울FC','S01');
+
+SELECT * FROM PLAYER;
+SELECT * FROM TEAM;
+
+--UPDATE로 수정
+
+UPDATE PLAYER SET BACK_NO = 99;
+UPDATE PLAYER SET POSITIONS = 'FW';
+
+SELECT * FROM PLAYER;
+
+--산술연산자
+--AS를 붙여도 되고 안붙여도 되고.
+--중간에 띄어쓰기가 있으면 " " 로 사용한다
+
+SELECT PLAYER_NAME 이름, HEIGHT - WEIGHT "키-몸무게" FROM player;
+
+--BMI 비만지수 측정 (ROUND 반올림 함수)
+SELECT PLAYER_NAME AS 이름, ROUND(WEIGHT/((HEIGHT/100)*(HEIGHT/100)),2) "BMI 비만지수" FROM PLAYER;
+
+--합성(CONCATENATION) 연산자
+
+SELECT PLAYER_NAME ||'선수,'|| HEIGHT || 'cm,' || WEIGHT || 'kg' 체격정보 FROM PLAYER;
+
+
+
