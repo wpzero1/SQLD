@@ -1,0 +1,75 @@
+
+1. Create
+
+--Oracle
+CREATE TABLE PLAYER (PLAYER_ID CHAR(7) NOT NULL
+                    ,PLAYER_NAME VARCHAR2(20) NOT NULL,
+                    ,TEAM_ID CHAR(3) NOT NULL
+                    ,.....
+                    ,CONSTRAINT PLAYER_PK PRIMARY KEY (PLAYER_ID)
+                    ,CONSTRAINT PLAYER_FK FOREIGN KEY (TEAM_ID) REFERENCES TEAM(TEAM_ID)
+                  );
+
+--SQL서버는 형식들만 좀 다르다. number / smallint나 tinyint값.
+
+ 1-2) 조회
+
+Oracle
+DESCRIBE PLAYER;
+
+SQL SERVER
+exec sp_help 'dbo.PLAYER'
+
+ 1-3) select로 테이블 생성
+
+ CREATE TABLE TEAM_TEMP AS SELECT * FROM TEAM;
+
+ SQL서버
+ SELECT * INTO TEAM_TEMP FROM TEAM;
+
+  2) ALTER
+
+--칼럼 추가
+ALTER TABLE PLAYER ADD (ADDRESS VARCHAR2(80));
+ --SQL은 괄호만 없앤다.
+
+--필요없는 칼럼 삭제
+ALTER TABLE PLAYER DROP COLUMN ADDRESS;
+
+--칼럼 데이터 유형, 제약조건 변경
+
+ALTER TABLE TABLE_TEMP MODIFY (ORIG_YYYY VARCHAR2(8) DEFAULT '20020129' NOT NULL);
+
+-- 칼럼 이름 변경
+
+ALTER TABLE PLAYER RENAME COLUMN PLAYER_ID TO TEMP_ID
+
+--SQL
+sp_rename 'dbo.TEAM_TEMP.TEAM_ID', 'TEAM_TEMP_ID', 'COLUMN';
+
+--제약조건 삭제
+
+ALTER TABLE PLAYER DROP CONSTRAINT PLAYER_FK
+
+--제약조건 추가
+
+ALTER TABLE PLAYER ADD CONSTRAINT PLAYER_FK FOREIGN KEY (TEAM_ID) REFERENCES TEAM(TEAM_ID);
+
+3) RENAME
+
+RENAME TEAM TO TEAM_BACKUP;
+
+sp_rename 'dbo.TEAM', 'TEAM_BACKUP';
+
+4) DROP
+
+--테이블 자체 삭제, 제약조건 또는 참조 테이블을 삭제해야함
+DROP TABLE PLAYER [CASCADE CONSTRAINT];
+
+5) TRUNCATE
+
+--테이블 자체는 살지만 모든 행의 삭제
+TRUNCATE TABLE PLAYER;
+
+
+ 
